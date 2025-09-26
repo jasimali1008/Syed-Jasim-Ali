@@ -1,0 +1,382 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width,initial-scale=1" />
+<title>Syed Jasim Ali — Portfolio</title>
+<link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+<style>
+body { margin:0; font-family:'Inter',sans-serif; color:#e6eef6; overflow-x:hidden; }
+video.bg-video { position:fixed; top:0; left:0; width:100%; height:100%; object-fit:cover; z-index:-2; }
+.overlay { position:fixed; top:0; left:0; width:100%; height:100%; background:rgba(7,16,39,0.75); z-index:-1; }
+
+/* Header */
+header {
+  display:flex; justify-content:space-between; align-items:center;
+  padding:15px 30px; background:rgba(7,16,39,0.9); backdrop-filter:blur(5px);
+  position:fixed; top:0; left:50%; transform:translateX(-50%);
+  max-width:1050px; width:98%; z-index:999;
+  box-shadow:0 2px 8px rgba(0,0,0,0.3); border-radius:12px;
+}
+.brand { display:flex; align-items:center; gap:20px; }
+.brand img { width:90px; height:90px; border-radius:50%; border:3px solid #6ee7b7; }
+.brand-text { display:flex; flex-direction:column; line-height:1; }
+#typed-name { font-size:28px; font-weight:800; color:#facc15; display:inline-block; }
+#typed-name::after { content:'|'; margin-left:2px; animation:blink 1s infinite; }
+@keyframes blink { 0%,50%,100% { opacity:1; } 25%,75% { opacity:0; } }
+.tag { font-size:16px; font-weight:600; color:#93c5fd; margin-top:4px; }
+
+/* Centered nav */
+.nav-center { display:flex; gap:20px; justify-content:center; flex:1; }
+
+/* Header buttons */
+.nav-center .btn {
+  background:white; color:#3b82f6; font-weight:600; text-decoration:none;
+  padding:8px 14px; border-radius:10px; transition:0.3s ease;
+}
+.nav-center .btn:hover { transform:scale(1.08); box-shadow:0 0 12px #fefefe; }
+
+/* Header Hire Me button */
+.hire-header {
+  background:linear-gradient(90deg,#06b6d4,#7c3aed);
+  color:white; font-weight:600; text-decoration:none;
+  padding:10px 16px; border-radius:10px; position:relative;
+  overflow:hidden; transition:0.4s all ease;
+}
+.hire-header::before, .hire-header::after {
+  content:""; position:absolute; left:50%; top:50%; width:150%; height:150%;
+  background:rgba(255,255,255,0.2); transform:translate(-50%,-50%) rotate(45deg); opacity:0; transition:0.3s;
+}
+.hire-header::after { transform:translate(-50%,-50%) rotate(-45deg); }
+.hire-header:hover::before, .hire-header:hover::after { opacity:1; }
+.hire-header:hover { transform:scale(1.08); box-shadow:0 0 15px white, 0 0 25px #06b6d4; }
+
+/* Wrap */
+.wrap { max-width:1100px; margin:0 auto; padding-top:180px; }
+
+/* Hero */
+.hero-desc { text-align:center; margin:40px 0; }
+.hero-desc h2 { font-size:26px; color:#f1f5f9; }
+.hero-desc p { font-size:16px; color:#cbd5e1; }
+
+/* Services */
+.services { margin-top:40px; }
+.services h2 { text-align:center; font-size:28px; text-shadow:0 0 12px rgba(110,231,183,0.7); border-bottom:2px solid #06b6d4; display:inline-block; padding-bottom:6px; }
+.service-grid { display:grid; grid-template-columns:repeat(auto-fit,minmax(250px,1fr)); gap:16px; margin-top:20px; }
+
+/* Service Card with overlay button */
+.service-card {
+  position: relative;
+  background: rgba(255,255,255,0.05);
+  border: 1px solid rgba(255,255,255,0.1);
+  border-radius: 12px;
+  padding: 20px;
+  text-align: center;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+  overflow: hidden;
+}
+
+/* Hover effect - scale & glow */
+.service-card:hover {
+  transform: scale(1.05);
+  box-shadow: 0 0 20px rgba(110,231,183,0.6);
+}
+
+.service-card img { width:100%; border-radius:10px; margin-bottom:10px; }
+.service-card h3 { margin:10px 0; }
+.service-card p { font-size:14px; color:#cbd5e1; }
+
+/* Dull effect */
+.service-card::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: rgba(0,0,0,0.5);
+  opacity: 0;
+  transition: opacity 0.3s;
+  border-radius: 12px;
+}
+.service-card:hover::after { opacity: 1; }
+
+/* Hire button slide with shine effect */
+.service-card .hire-overlay {
+  position: absolute;
+  bottom: -60px;
+  left: 50%;
+  transform: translateX(-50%);
+  background: linear-gradient(90deg,#06b6d4,#7c3aed);
+  color: white;
+  font-weight: 600;
+  padding: 10px 20px;
+  border-radius: 8px;
+  text-decoration: none;
+  transition: all 0.4s ease;
+  z-index: 2;
+  overflow: hidden; /* shine clip */
+}
+.service-card:hover .hire-overlay { bottom: 20px; }
+
+/* Shine pseudo-element */
+.service-card .hire-overlay::before {
+  content: "";
+  position: absolute;
+  top: -50%;
+  left: -30%;
+  width: 60%;
+  height: 200%;
+  background: rgba(255,255,255,0.6);
+  transform: rotate(25deg);
+  opacity: 0;
+  transition: all 0.5s ease;
+}
+.service-card .hire-overlay:hover::before {
+  left: 130%;
+  opacity: 1;
+  transition: all 0.5s ease;
+}
+
+/* Samples */
+.grid { display:grid; grid-template-columns:repeat(2,1fr); gap:14px; margin-top:20px; }
+.card {
+  position: relative;
+  width: 100%;
+  aspect-ratio: 16/9;
+  overflow: hidden;
+  border-radius: 12px;
+  cursor: pointer;
+  transition: transform 0.3s, box-shadow 0.3s;
+}
+.card:hover { transform:scale(1.05); box-shadow:0 0 18px rgba(110,231,183,0.6); }
+.thumb { width: 100%; height: 100%; object-fit: cover; border-radius: 12px; }
+.thumb.short { object-fit: contain; background:#0b0f1a; }
+
+/* Softwares */
+.soft-grid { display:flex; flex-wrap:wrap; gap:10px; margin-top:20px; }
+.soft { display:flex; align-items:center; gap:10px; padding:10px; border-radius:10px; background:rgba(255,255,255,0.05); border:1px solid rgba(255,255,255,0.1); min-width:220px; transition:0.3s; cursor:pointer; }
+.soft img { width:36px; height:36px; border-radius:8px; }
+.soft:hover { transform:scale(1.06); box-shadow:0 0 14px rgba(110,231,183,0.6); }
+
+/* Skills */
+.skills { margin:50px 0; padding:20px; background:rgba(7,16,39,0.7); border-radius:12px; text-align:center; }
+.skills h2 { color:#06b6d4; margin-bottom:15px; }
+.skills p { max-width:800px; margin:0 auto; color:#cbd5e1; font-size:16px; line-height:1.6; }
+
+/* Footer */
+footer { margin-top:40px; padding:18px; background:rgba(255,255,255,0.05); border-radius:12px; text-align:center; }
+.footer-links { margin-bottom:8px; }
+.footer-links a { color:#93c5fd; text-decoration:none; margin:0 6px; transition:0.3s; }
+.footer-links a:hover { color:#fff; text-shadow:0 0 8px #06b6d4; }
+.footer-contact { margin-top:10px; font-size:14px; color:#cbd5e1; }
+
+/* Popup */
+.popup {
+  position:fixed; top:0; left:0;
+  width:100%; height:100%;
+  background:rgba(0,0,0,0.85);
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  opacity:0;
+  visibility:hidden;
+  transition:0.4s ease;
+  z-index:1000;
+}
+.popup.active { opacity:1; visibility:visible; }
+
+/* ✅ Wrapper for video content */
+.popup-inner {
+  display:flex;
+  justify-content:center;
+  align-items:center;
+  width:100%;
+  height:100%;
+}
+
+/* Horizontal videos */
+.popup-video.horizontal {
+  max-width:80%;
+  max-height:80%;
+  aspect-ratio:16/9;
+  object-fit:contain;
+}
+
+/* Vertical Short Reel */
+.popup-video.vertical {
+  max-width:45%;
+  max-height:90%;
+  aspect-ratio:9/16;
+  object-fit:contain;
+}
+
+.close-btn { position:absolute; top:20px; right:30px; font-size:28px; color:white; cursor:pointer; }
+
+/* Dim effect */
+.dim { filter:brightness(0.3); pointer-events:none; }
+
+html { scroll-behavior:smooth; }
+</style>
+</head>
+<body>
+
+<video class="bg-video" autoplay muted loop>
+<source src="bg-video.mp4" type="video/mp4">
+</video>
+<div class="overlay"></div>
+
+<div class="wrap">
+<header>
+  <div class="brand">
+    <img src="profile.jpg" alt="Syed Jasim Ali">
+    <div class="brand-text">
+      <h1 id="typed-name"></h1>
+      <div class="tag">Video Editor • Graphics Designer</div>
+    </div>
+  </div>
+
+  <div class="nav-center">
+    <a class="btn" href="#work">Work</a>
+    <a class="btn" href="#services">Services</a>
+    <a class="btn" href="#softwares">Softwares</a>
+  </div>
+
+  <a class="cta hire-header" href="https://wa.me/923350457822" target="_blank">Hire Me</a>
+</header>
+
+<div class="hero-desc">
+  <h2>Creative Video Editing & Graphic Design</h2>
+  <p>I create professional edits, stunning graphics, and engaging content to bring your vision to life.</p>
+</div>
+
+<section id="services" class="services">
+<h2>My Services</h2>
+<div class="service-grid">
+  <div class="service-card">
+    <img src="services/service1.jpg">
+    <h3>Video Editing</h3>
+    <p>Professional editing for all kinds of content.</p>
+    <a href="https://wa.me/923350457822" target="_blank" class="hire-overlay">Hire Me</a>
+  </div>
+  <div class="service-card">
+    <img src="services/service2.jpg">
+    <h3>Graphics Designing</h3>
+    <p>Creative designs for branding & social media.</p>
+    <a href="https://wa.me/923350457822" target="_blank" class="hire-overlay">Hire Me</a>
+  </div>
+  <div class="service-card">
+    <img src="services/service3.jpg">
+    <h3>Logo Animation</h3>
+    <p>Eye-catching animated logos.</p>
+    <a href="https://wa.me/923350457822" target="_blank" class="hire-overlay">Hire Me</a>
+  </div>
+  <div class="service-card">
+    <img src="services/service4.jpg">
+    <h3>Thumbnail Design</h3>
+    <p>Attractive thumbnails for YouTube.</p>
+    <a href="https://wa.me/923350457822" target="_blank" class="hire-overlay">Hire Me</a>
+  </div>
+</div>
+</section>
+
+<section id="work">
+<h2>Samples</h2>
+<div class="grid">
+  <div class="card" data-video="samples/sample-logo.mp4">
+    <img class="thumb" src="samples/sample-logo.jpg" alt="Logo Animation">
+  </div>
+  <div class="card" data-video="samples/sample-thumbnail.mp4">
+    <img class="thumb" src="samples/sample-thumbnail.jpg" alt="Video">
+  </div>
+  <div class="card" data-video="samples/sample-short.mp4">
+    <img class="thumb short" src="samples/sample-short.jpg" alt="Short Reel">
+  </div>
+  <div class="card" data-video="samples/sample-long.mp4">
+    <img class="thumb" src="samples/sample-long.jpg" alt="Long Video">
+  </div>
+</div>
+</section>
+
+<section id="softwares">
+<h2>Softwares</h2>
+<div class="soft-grid">
+  <div class="soft"><img src="logos/premiere.svg"><div><strong>Premiere Pro</strong></div></div>
+  <div class="soft"><img src="logos/aftereffects.svg"><div><strong>After Effects</strong></div></div>
+  <div class="soft"><img src="logos/capcut.png"><div><strong>CapCut</strong></div></div>
+  <div class="soft"><img src="logos/filmora.png"><div><strong>Filmora</strong></div></div>
+  <div class="soft"><img src="logos/edius.png"><div><strong>Edius</strong></div></div>
+  <div class="soft"><img src="logos/coreldraw.png"><div><strong>CorelDraw</strong></div></div>
+  <div class="soft"><img src="logos/illustrator.svg"><div><strong>Illustrator</strong></div></div>
+  <div class="soft"><img src="logos/photoshop.svg"><div><strong>Photoshop</strong></div></div>
+</div>
+</section>
+
+<section class="skills">
+<h2>My Skills</h2>
+<p>Expertise in video editing, motion graphics, logo animation, video creation, and photo manipulation. Skilled with Premiere Pro, After Effects, Photoshop, Illustrator, Filmora, and CapCut.</p>
+</section>
+
+<footer>
+<div class="footer-links">
+  <a href="#services">Services</a> | 
+  <a href="#work">Work</a> | 
+  <a href="#softwares">Softwares</a> | 
+  <a href="https://wa.me/923350457822" target="_blank">Hire Me</a>
+</div>
+<div class="footer-contact">📞 0335-0457822 ✉️ jasimali7822@gmail.com</div>
+</footer>
+</div>
+
+<!-- Popup -->
+<div class="popup" id="popup">
+  <span class="close-btn" onclick="closePopup()">×</span>
+  <div id="popupContent"></div>
+</div>
+
+<script>
+// Typewriter effect
+const typedName = document.getElementById("typed-name");
+const nameText = "Syed Jasim Ali";
+let i=0, forward=true;
+function typeWriter(){
+  if(forward){ if(i<=nameText.length){ typedName.textContent=nameText.substring(0,i); i++; } 
+  else{ forward=false; setTimeout(typeWriter,1000); return; } }
+  else{ if(i>=0){ typedName.textContent=nameText.substring(0,i); i--; } else forward=true; }
+  setTimeout(typeWriter, forward?150:80);
+}
+typeWriter();
+
+const popup = document.getElementById('popup');
+const wrap = document.querySelector('.wrap');
+const popupContent = document.getElementById('popupContent');
+
+// Sample cards video popup
+document.querySelectorAll('.card').forEach(card => {
+  card.addEventListener('click', () => {
+    const videoFile = card.getAttribute('data-video');
+    if(videoFile){
+      const isShort = videoFile.includes("short");
+      const videoClass = isShort ? "popup-video vertical" : "popup-video horizontal";
+
+      popupContent.innerHTML = `
+        <div class="popup-inner">
+          <video class="${videoClass}" controls autoplay>
+            <source src="${videoFile}" type="video/mp4">
+          </video>
+        </div>
+      `;
+      popup.classList.add('active');
+      wrap.classList.add('dim');
+    }
+  });
+});
+
+// Close popup
+function closePopup() {
+  popup.classList.remove('active');
+  wrap.classList.remove('dim');
+  popupContent.innerHTML = "";
+}
+</script>
+
+</body>
+</html>
